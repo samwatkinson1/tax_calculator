@@ -1,43 +1,78 @@
 package tax;
 
-public class DefaultTaxCalculator extends TaxCalculator{
+public class DefaultTaxCalculator extends TaxCalculator {
 
     @Override
     int calculateTax(Vehicle vehicle) {
         int vehicleCo2Emissions = vehicle.getCo2Emissions();
         FuelType vehicleFuelType = vehicle.getFuelType();
 
-        if (vehicleFuelType != FuelType.PETROL) {
-            return 9999;
+        if (vehicleFuelType == FuelType.PETROL) {
+            return petrolCo2Calculator(vehicleCo2Emissions);
+        } else if (vehicleFuelType == FuelType.DIESEL) {
+            return dieselCo2Calculator(vehicleCo2Emissions);
         } else {
-            if(vehicleCo2Emissions > 255) {
-                return 2070;
-            } else if(vehicleCo2Emissions >= 226) {
-                return 1760;
-            } else if(vehicleCo2Emissions >= 191) {
-                return 1240;
-            } else if(vehicleCo2Emissions >= 171) {
-                return 830;
-            } else if(vehicleCo2Emissions >= 151) {
-                return 515;
-            } else if(vehicleCo2Emissions >= 131) {
-                return 205;
-            } else if(vehicleCo2Emissions >= 111) {
-                return 165;
-            } else if(vehicleCo2Emissions >= 101) {
-                return 145;
-            } else if(vehicleCo2Emissions >= 91) {
-                return 125;
-            } else if(vehicleCo2Emissions >= 76) {
-                return 105;
-            } else if(vehicleCo2Emissions >= 51) {
-                return 25;
-            } else if(vehicleCo2Emissions >= 1) {
-                return 10;
-            } else{
-                return 0;
-            }
+            return 9999;
         }
     }
+
+    private int petrolCo2Calculator(int co2) {
+        if (co2 > 255) {
+            return 2070;
+        } else if (co2 >= 226) {
+            return 1760;
+        } else if (co2 >= 191) {
+            return 1240;
+        } else if (co2 >= 171) {
+            return 830;
+        } else if (co2 >= 151) {
+            return 515;
+        } else if (co2 >= 131) {
+            return 205;
+        } else if (co2 >= 111) {
+            return 165;
+        } else if (co2 >= 101) {
+            return 145;
+        } else if (co2 >= 91) {
+            return 125;
+        } else if (co2 >= 76) {
+            return 105;
+        } else if (co2 >= 51) {
+            return 25;
+        } else if (co2 >= 1) {
+            return 10;
+        } else {
+            return 0;
+        }
+    }
+
+    private int dieselCo2Calculator(int co2) {
+        if (co2 >= 226) {
+            return 2070;
+        } else if (co2 >= 191) {
+            return 1760;
+        } else if (co2 >= 171) {
+            return 1240;
+        } else if (co2 >= 151) {
+            return 830;
+        } else if (co2 >= 131) {
+            return 515;
+        } else if (co2 >= 111) {
+            return 205;
+        } else if (co2 >= 101) {
+            return 165;
+        } else if (co2 >= 91) {
+            return 145;
+        } else if (co2 >= 76) {
+            return 125;
+        } else if (co2 >= 51) {
+            return 105;
+        } else if (co2 >= 1) {
+            return 25;
+        } else {
+            return 0;
+        }
+    }
+
 }
 
