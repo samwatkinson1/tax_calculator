@@ -15,7 +15,7 @@ public class Range {
     }
 
     boolean isInbetween(int num){
-        return (num >=start || num <= end);
+        return (num >=start && num <= end);
     }
 
 }
