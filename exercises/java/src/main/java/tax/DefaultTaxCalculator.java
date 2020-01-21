@@ -23,8 +23,10 @@ public class DefaultTaxCalculator extends TaxCalculator {
         FuelType vehicleFuelType = vehicle.getFuelType();
         LocalDate vehicleDateOfFirstReg = vehicle.getDateOfFirstRegistration();
         int cost = 0;
-        if (vehicle.getDateOfFirstRegistration().getYear() == getYear()-1) {
-            cost = firstYearTax(vehicleFuelType, vehicleCo2Emissions);
+
+
+        if (vehicleDateOfFirstReg.getYear() == getYear()-1) {
+            cost = CO2Range.getCO2Range(vehicleCo2Emissions).getPriceForCO2FromFuelType(vehicleFuelType);
         }else{
             if (vehicle.getListPrice() > 40000) {
                 if (vehicle.getFuelType().equals(FuelType.PETROL) || vehicle.getFuelType().equals(FuelType.DIESEL)) {

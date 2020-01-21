@@ -2,7 +2,7 @@ package tax;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public enum CO2Range {
 
@@ -32,9 +32,11 @@ public enum CO2Range {
         put(Range.values(91,100), NINETY_ONE_TO_ONE_HUNDRED);
         put(Range.values(101,110), ONE_HUNDRED_ONE_TO_ONE_HUNDRED_TEN);
         put(Range.values(111,130), ONE_HUNDRED_ELEVEN_TO_ONE_HUNDRED_THIRTY);
+        put(Range.values(131,150), ONE_HUNDRED_THIRTY_ONE_TO_ONE_HUNDRED_FIFTY);
         put(Range.values(151,170), ONE_HUNDRED_FIFTY_ONE_TO_ONE_HUNDRED_SEVENTY);
         put(Range.values(171,190), ONE_HUNDRED_SEVENTY_ONE_TO_ONE_HUNDRED_NINETY);
         put(Range.values(191,225), ONE_HUNDRED_NINETY_ONE_TO_TWO_HUNDRED_TWENTY_FIVE);
+        put(Range.values(226,255), TWO_HUNDRED_TWENTY_SIX_TO_TWO_HUNDRED_FIFTY_FIVE);
         put(Range.values(256,Integer.MAX_VALUE), OVER_TWO_HUNDRED_FIFTY_FIVE);
 
     }};
@@ -46,38 +48,16 @@ public enum CO2Range {
     }
 
     public static CO2Range getCO2Range(int co2Range) {
-
-        allRanges.entrySet()
+        final Optional<Map.Entry<Range, CO2Range>> firstCO2Range = allRanges.entrySet()
                 .stream()
-                .filter(e -> e.getKey().isInbetween(co2Range));
+                .filter(e -> e.getKey().isInbetween(co2Range))
+                .findFirst();
 
-        if (co2Range <= 0) {
-            return ZERO;
-        }else if (co2Range <= 50) {
-            return ONE_TO_FIFTY;
-        }if (co2Range <= 75) {
-            return FIFTY_ONE_TO_SEVENTY_FIVE;
-        }if (co2Range <= 90) {
-            return SEVENTY_SIX_TO_NINETY;
-        }if (co2Range <= 100) {
-            return NINETY_ONE_TO_ONE_HUNDRED;
-        }if (co2Range <= 110) {
-            return ONE_HUNDRED_ONE_TO_ONE_HUNDRED_TEN;
-        }if (co2Range <= 130) {
-            return ONE_HUNDRED_ELEVEN_TO_ONE_HUNDRED_THIRTY;
-        }if (co2Range <= 150) {
-            return ONE_HUNDRED_THIRTY_ONE_TO_ONE_HUNDRED_FIFTY;
-        }if (co2Range <= 170) {
-            return ONE_HUNDRED_FIFTY_ONE_TO_ONE_HUNDRED_SEVENTY;
-        }if (co2Range <= 190) {
-            return ONE_HUNDRED_SEVENTY_ONE_TO_ONE_HUNDRED_NINETY;
-        }if (co2Range <= 225) {
-            return ONE_HUNDRED_NINETY_ONE_TO_TWO_HUNDRED_TWENTY_FIVE;
-        }if (co2Range <= 255) {
-            return TWO_HUNDRED_TWENTY_SIX_TO_TWO_HUNDRED_FIFTY_FIVE;
-        }else{
-            return OVER_TWO_HUNDRED_FIFTY_FIVE;
+        if (firstCO2Range.isPresent()) {
+            return firstCO2Range.get().getValue();
         }
+
+        return ZERO;
     }
 
     public int getPriceForCO2FromFuelType(FuelType fuelType) {
