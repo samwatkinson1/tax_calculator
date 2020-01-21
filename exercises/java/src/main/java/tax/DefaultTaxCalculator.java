@@ -3,51 +3,85 @@ package tax;
 import java.time.LocalDate;
 
 public class DefaultTaxCalculator extends TaxCalculator {
-    public Emissions emissionsCalculator  = new Emissions();
+    private Emissions emissionsCalculator = new Emissions();
+    private FeatureToggle features;
+    private boolean afterFirstYearToggle;
+    private boolean expensiveVehicleToggle;
+
+    DefaultTaxCalculator(boolean AFTER_YEAR, boolean EXPENSIVE_VEHICLE){
+        this.afterFirstYearToggle = true;
+        this.expensiveVehicleToggle = true;
+    }
+
+    DefaultTaxCalculator(FeatureToggle features) {
+        this.features = features;
+    }
+
     @Override
     int calculateTax(Vehicle vehicle) {
-        FuelType vehicleFuelType = vehicle.getFuelType();
-        LocalDate vehicleRegDate = vehicle.getDateOfFirstRegistration();
-
-        if (getYear() == vehicleRegDate.getYear()) {
-            return getFirstYearTax(vehicle, vehicleFuelType);
-        } else {
-            return getSubsequentTax(vehicle, vehicleFuelType);
-        }
-    }
-
-    private int getFirstYearTax(Vehicle vehicle, FuelType fuelType) {
         int vehicleCo2Emissions = vehicle.getCo2Emissions();
-        switch (fuelType) {
-            case PETROL:
-                vehicleCo2Emissions = emissionsCalculator.petrolCo2Calculator(vehicleCo2Emissions);
-                break;
-            case DIESEL:
-                vehicleCo2Emissions = emissionsCalculator.dieselCo2Calculator(vehicleCo2Emissions);
-                break;
-            case ALTERNATIVE_FUEL:
-                vehicleCo2Emissions = emissionsCalculator.alternateCo2Calculator(vehicleCo2Emissions);
-                break;
-            default:
-                vehicleCo2Emissions = 0;
-        }
-        return vehicleCo2Emissions;
-    }
-
-    private int getSubsequentTax(Vehicle vehicle, FuelType fuelType) {
+        FuelType vehicleFuelType = vehicle.getFuelType();
+        LocalDate vehicleDateOfFirstReg = vehicle.getDateOfFirstRegistration();
         int cost = 0;
-        switch (fuelType) {
-            case PETROL:
-            case DIESEL:
-                cost = 140;
-                break;
-            case ALTERNATIVE_FUEL:
-                cost = 130;
-                break;
+        if (vehicle.getDateOfFirstRegistration().getYear() == getYear()-1) {
+            cost = firstYearTax(vehicleFuelType, vehicleCo2Emissions);
+        }else{
+            if (vehicle.getListPrice() > 40000) {
+                if (vehicle.getFuelType().equals(FuelType.PETROL) || vehicle.getFuelType().equals(FuelType.DIESEL)) {
+                    cost = 450;
+                } else if (vehicle.getFuelType().equals(FuelType.ELECTRIC)) {
+                    cost = 310;
+                } else if (vehicle.getFuelType().equals(FuelType.ALTERNATIVE_FUEL)) {
+                    cost =  440;
+                }
+            }else {
+                cost = subsequentYearTax(vehicleFuelType, vehicleCo2Emissions);
+            }
         }
         return cost;
     }
 
+    private int firstYearTax(FuelType vehicleFuelType, int vehicleCo2Emissions) {
+        int result;
+        switch (vehicleFuelType) {
+            case PETROL:
+                result = emissionsCalculator.petrolCo2Calc(vehicleCo2Emissions);
+                break;
+            case DIESEL:
+                result = emissionsCalculator.dieselCo2Calc(vehicleCo2Emissions);
+                break;
+            case ALTERNATIVE_FUEL:
+            case ELECTRIC:
+                result = emissionsCalculator.alternateCo2Calc(vehicleCo2Emissions);
+                break;
+            default:
+                result = Integer.MAX_VALUE;
+                break;
+        }
+        return result;
+
+    }
+
+    private int subsequentYearTax(FuelType vehicleFuelType, int vehicleCo2Emissions) {
+        int result;
+        switch (vehicleFuelType) {
+            case PETROL:
+            case DIESEL:
+                result = 140;
+                break;
+            case ALTERNATIVE_FUEL:
+                result = 130;
+                break;
+            case ELECTRIC:
+                result = 0;
+                break;
+            default:
+                result = Integer.MAX_VALUE;
+                break;
+        }
+        return result;
+
+    }
 
 
 }

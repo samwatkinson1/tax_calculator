@@ -12,7 +12,7 @@ abstract class TaxCalculator{
     }
 
     TaxCalculator(int year){
-        this.year = 2019;
+        this.year = year;
     }
 
     int getYear() {

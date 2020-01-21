@@ -1,89 +1,97 @@
 package tax;
 
-class Emissions {
-    int petrolCo2Calculator(int co2) {
+public class Emissions {
+    int petrolCo2Calc(int vehicleCo2Emissions) {
         int cost = 0;
-        if (co2 > 255) {
+
+        if (vehicleCo2Emissions > 255) {
             cost = 2070;
-        } else if (co2 >= 226) {
-            return 1760;
-        } else if (co2 >= 191) {
+        } else if (vehicleCo2Emissions >= 226) {
+            cost = 1760;
+        } else if (vehicleCo2Emissions >= 191) {
             cost = 1240;
-        } else if (co2 >= 171) {
+        } else if (vehicleCo2Emissions >= 171) {
             cost = 830;
-        } else if (co2 >= 151) {
+        } else if (vehicleCo2Emissions >= 151) {
             cost = 515;
-        } else if (co2 >= 131) {
+        } else if (vehicleCo2Emissions >= 131) {
             cost = 205;
-        } else if (co2 >= 111) {
+        } else if (vehicleCo2Emissions >= 111) {
             cost = 165;
-        } else if (co2 >= 101) {
+        } else if (vehicleCo2Emissions >= 101) {
             cost = 145;
-        } else if (co2 >= 91) {
+        } else if (vehicleCo2Emissions >= 91) {
             cost = 125;
-        } else if (co2 >= 76) {
+        } else if (vehicleCo2Emissions >= 76) {
             cost = 105;
-        } else if (co2 >= 51) {
+        } else if (vehicleCo2Emissions >= 51) {
             cost = 25;
-        } else if (co2 >= 1) {
+        } else if (vehicleCo2Emissions >= 1) {
             cost = 10;
         }
+
         return cost;
     }
 
-    int dieselCo2Calculator(int co2) {
-        if (co2 >= 226) {
-            return 2070;
-        } else if (co2 >= 191) {
-            return 1760;
-        } else if (co2 >= 171) {
-            return 1240;
-        } else if (co2 >= 151) {
-            return 830;
-        } else if (co2 >= 131) {
-            return 515;
-        } else if (co2 >= 111) {
-            return 205;
-        } else if (co2 >= 101) {
-            return 165;
-        } else if (co2 >= 91) {
-            return 145;
-        } else if (co2 >= 76) {
-            return 125;
-        } else if (co2 >= 51) {
-            return 105;
-        } else if (co2 >= 1) {
-            return 25;
-        } else {
-            return 0;
+    int dieselCo2Calc(int vehicleCo2Emissions) {
+        int cost = 0;
+
+        if (vehicleCo2Emissions > 255) {
+            cost = 2070;
+        } else if (vehicleCo2Emissions >= 226) {
+            cost = 2070;
+        } else if (vehicleCo2Emissions >= 191) {
+            cost = 1760;
+        } else if (vehicleCo2Emissions >= 171) {
+            cost = 1240;
+        } else if (vehicleCo2Emissions >= 151) {
+            cost = 830;
+        } else if (vehicleCo2Emissions >= 131) {
+            cost = 515;
+        } else if (vehicleCo2Emissions >= 111) {
+            cost = 205;
+        } else if (vehicleCo2Emissions >= 101) {
+            cost = 165;
+        } else if (vehicleCo2Emissions >= 91) {
+            cost = 145;
+        } else if (vehicleCo2Emissions >= 76) {
+            cost = 125;
+        } else if (vehicleCo2Emissions >= 51) {
+            cost = 105;
+        } else if (vehicleCo2Emissions >= 1) {
+            cost = 25;
         }
+
+        return cost;
     }
 
-    int alternateCo2Calculator(int co2) {
-        if (co2 > 255) {
-            return 2060;
-        } else if (co2 >= 226) {
-            return 1750;
-        } else if (co2 >= 191) {
-            return 1230;
-        } else if (co2 >= 171) {
-            return 820;
-        } else if (co2 >= 151) {
-            return 505;
-        } else if (co2 >= 131) {
-            return 195;
-        } else if (co2 >= 111) {
-            return 155;
-        } else if (co2 >= 101) {
-            return 135;
-        } else if (co2 >= 91) {
-            return 115;
-        } else if (co2 >= 76) {
-            return 95;
-        } else if (co2 >= 51) {
-            return 15;
-        } else {
-            return 0;
+    int alternateCo2Calc(int vehicleCo2Emissions) {
+        int cost = 0;
+
+        if (vehicleCo2Emissions > 255) {
+            cost = 2060;
+        } else if (vehicleCo2Emissions >= 226) {
+            cost = 1750;
+        } else if (vehicleCo2Emissions >= 191) {
+            cost = 1230;
+        } else if (vehicleCo2Emissions >= 171) {
+            cost = 820;
+        } else if (vehicleCo2Emissions >= 151) {
+            cost = 505;
+        } else if (vehicleCo2Emissions >= 131) {
+            cost = 195;
+        } else if (vehicleCo2Emissions >= 111) {
+            cost = 155;
+        } else if (vehicleCo2Emissions >= 101) {
+            cost = 135;
+        } else if (vehicleCo2Emissions >= 91) {
+            cost = 115;
+        } else if (vehicleCo2Emissions >= 76) {
+            cost = 95;
+        } else if (vehicleCo2Emissions >= 51) {
+            cost = 15;
         }
+
+        return cost;
     }
 }
